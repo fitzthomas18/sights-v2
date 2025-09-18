@@ -9,10 +9,10 @@ import Settings from "./pages/Settings";
 import {OpenAPI} from "./api";
 
 
-if (process.env.NODE_ENV === 'development') {
+if (import.meta.env.DEV) {
     OpenAPI.BASE = 'http://localhost:8000/api';
 }
-if (process.env.NODE_ENV === 'production') {
+if (import.meta.env.PROD) {
     OpenAPI.BASE = '/api';
 }
 console.log(OpenAPI.BASE);

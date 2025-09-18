@@ -96,7 +96,7 @@ app.add_middleware(
 api = FastAPI()
 app.mount("/api/camera/{id:str}", CameraComponent.stream)
 app.mount("/api", api, name="api")
-app.mount("/", SinglePageApplication(directory="../build"), name="frontend")
+app.mount("/", SinglePageApplication(directory="../client/dist"), name="frontend")
 
 '''
 Quick note re: endpoints using async def or def
@@ -186,4 +186,3 @@ def set_settings(body: PostSettingsBody):
     with open("settings.toml", mode="w") as fp:
         fp.write(body.content)
     reload()
-

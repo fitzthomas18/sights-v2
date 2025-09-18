@@ -21,8 +21,8 @@ function Index() {
     useDriveHotkey(['a', Key.ArrowLeft], -125, 125)
     useDriveHotkey(['s', Key.ArrowDown], -125, -125)
     useDriveHotkey(['d', Key.ArrowRight], 125, -125)
-    useHotkeys('=', () => setSpeed(prev => Math.min(8, prev + 1)))
-    useHotkeys('-', () => setSpeed(prev => Math.max(1, prev - 1)))
+    useHotkeys('equal', () => setSpeed(prev => Math.min(8, prev + 1)))
+    useHotkeys('minus', () => setSpeed(prev => Math.max(1, prev - 1)))
 
     useHotkeys('num1', () => client.default.armMoveArmServoServoNamePost("SHOULDER", {direction: true}));
     useHotkeys('num4', () => client.default.armMoveArmServoServoNamePost("SHOULDER", {direction: false}));

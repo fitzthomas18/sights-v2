@@ -26,7 +26,7 @@ function classNames(...classes: string[]) {
 }
 
 export const SelectableCard = ({id, state, client}: { id: number, state: State, client: AppClient }) => {
-    const getOptions = useMemo(() => {
+      const getOptions = useMemo(() => {
         const options: Option[] = [
             {
                 name: 'None',
@@ -104,6 +104,15 @@ export const SelectableCard = ({id, state, client}: { id: number, state: State, 
         if (selected) {
             setSelectedComponent(JSON.parse(selected));
         }
+        const handleReset = () => {
+          setSelectedComponent(null);
+        };
+
+        window.addEventListener('resetSelectableCards', handleReset);
+
+        return () => {
+          window.removeEventListener('resetSelectableCards', handleReset);
+        };
     }, []);
     if (selectedComponent != null) {
         // Check if option in localstorage exists in the current options
@@ -119,7 +128,7 @@ export const SelectableCard = ({id, state, client}: { id: number, state: State, 
 
     }
     return (
-        <div className={"bg-gray-100 rounded-md px-4 py-2 pb-4"}>
+        <div className={"bg-gray-100 dark:bg-neutral-800 rounded-md px-4 py-2 pb-4"}>
             <Listbox value={null} onChange={(selected: number) => {
                 localStorage.setItem(`selectedComponent${id}`, JSON.stringify(getOptions[selected].name));
                 setSelectedComponent(getOptions[selected].name)
@@ -128,7 +137,7 @@ export const SelectableCard = ({id, state, client}: { id: number, state: State, 
                     <>
                         <div className="relative mt-2">
                             <Listbox.Button
-                                className="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-sky-600 sm:text-sm sm:leading-6">Select
+                                className="relative w-full cursor-default rounded-md bg-white dark:bg-neutral-700 py-1.5 pl-3 pr-10 text-left text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-neutral-600 focus:outline-none focus:ring-2 focus:ring-sky-600 sm:text-sm sm:leading-6">Select
                                 component...
                                 <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
                                     {open ? <FaChevronDown className="h-5 w-5 text-gray-400" aria-hidden="true" /> :
@@ -156,7 +165,7 @@ export const SelectableCard = ({id, state, client}: { id: number, state: State, 
                                             value={index}
                                         >
                                             <div className="flex items-center">
-                                                <div className="h-5 w-5 flex-shrink-0 rounded-full pt-0.5">
+                                                <div className="h-5 w-5 shrink-0 rounded-full pt-0.5">
                                                     {getOptions[index].Icon}
                                                 </div>
                                                 <span

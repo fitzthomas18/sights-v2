@@ -13,7 +13,7 @@ function classNames(...classes: string[]) {
 export const Nav = () => {
     const client = new AppClient();
     return (
-        <nav className="border-gray-200 bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
+        <nav className="border-gray-200 bg-gray-50 dark:bg-neutral-800 dark:border-neutral-600">
             <div className="container flex flex-wrap items-center justify-between mx-auto p-4 relative">
 
                 <div className="flex basis-1/3 items-center md:order-1">
@@ -22,7 +22,7 @@ export const Nav = () => {
 
                 <div className="flex basis-1/3 justify-center md:order-2">
                     <Link to={"/"} className={"hover:border-b"}>
-                        <span className={"text-sky-800"}>SIGHTS</span> Interface
+                        <span className={"text-sky-600"}>SIGHTS</span><span className={"text-black dark:text-white"}> Interface</span>
                     </Link>
                 </div>
 
@@ -34,10 +34,10 @@ export const Nav = () => {
                     </Link>
                     <Button onClick={() => {
                         localStorage.clear();
-                        window.location.reload();
+                        window.dispatchEvent(new CustomEvent('resetSelectableCards'));
                     }}
                             title={"Clear layout selections"}
-                            color="text-gray-700 hover:text-white border border-gray-800 hover:bg-gray-800"><LiaBroomSolid/></Button>
+                            color="text-gray-700 hover:text-white dark:text-white border border-gray-800 dark:border-white hover:bg-neutral-700"><LiaBroomSolid/></Button>
 
                     <Menu as="div" className="relative inline-block text-left">
                         <div>
@@ -58,14 +58,14 @@ export const Nav = () => {
                             leaveTo="transform opacity-0 scale-95"
                         >
                             <Menu.Items
-                                className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white dark:bg-neutral-800 shadow-lg ring-1 ring-black dark:ring-neutral-600 ring-opacity-5 focus:outline-none">
                                 <div className="py-1">
                                     <Menu.Item>
                                         {({active}) => (
                                             <a
                                                 href="#"
                                                 className={classNames(
-                                                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                                                    active ? 'bg-gray-100 dark:bg-neutral-700 text-gray-900' : 'text-gray-700 dark:text-white',
                                                     'block px-4 py-2 text-sm'
                                                 )}
                                                 onClick={() => client.default.powerPoweroffPost()}
@@ -79,7 +79,7 @@ export const Nav = () => {
                                             <a
                                                 href="#"
                                                 className={classNames(
-                                                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                                                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700 dark:text-white',
                                                     'block px-4 py-2 text-sm'
                                                 )}
                                                 onClick={() => client.default.rebootRebootPost()}
