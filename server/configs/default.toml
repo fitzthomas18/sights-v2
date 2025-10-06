@@ -1,4 +1,4 @@
-# Config file for Sights Lite
+# Config file for SIGHTS v2
 
 [drive]
 enabled = false
@@ -13,6 +13,17 @@ enabled = false
 
 [arm]
 enabled = false
+mode = "hiwonder"
+
+    [arm.firmata]
+    port = "/dev/ttyACM0"
+    baudrate = 57600
+
+    [arm.hiwonder]
+    port = "SW_SERIAL1"
+    baudrate = 9600
+    tx = 10
+    rx = 9
 
     [arm.servos.SHOULDER]
     index = 15

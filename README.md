@@ -1,4 +1,4 @@
-# Sights Lite
+# SIGHTS
 
 ![Screenshot](screenshot.png)
 
@@ -8,7 +8,7 @@ It presently makes a number of core design decisions different to Sights includi
 
 It uses a modern stack: React on the frontend and Starlette/FastAPI (Python) on the backend. Frontend uses Typescript with endpoints generated from the backend applications. UI is primarily built using TailwindCSS.
 
-Still in early stages of development. It may eventually replace Sights (as Sights 2.0) once a suitable level of extensibility (particularly some sort of plugin support) and abstraction from the rescue robotics domain is reached. 
+Still in early stages of development. It may eventually replace Sights (as Sights 2.0) once a suitable level of extensibility (particularly some sort of plugin support) and abstraction from the rescue robotics domain is reached.
 
 ### Quick start
 
@@ -167,7 +167,7 @@ This isn't a real roadmap, more of a list of suggestions on what this project ne
     timestamp: '2025-08-12T14:01:15.675Z',
     data: [
         {
-            source_id: 1 
+            source_id: 1
             value: 26
         },
         {
