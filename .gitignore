@@ -10,11 +10,8 @@ node_modules
 /coverage
 
 # production
-/client/dist
-
-# docs
-/docs/.vitepress/dist
-/docs/.vitepress/cache
+dist
+cache
 
 # misc
 .DS_Store

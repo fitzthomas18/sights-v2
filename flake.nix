@@ -8,13 +8,13 @@
         python3Packages.virtualenv
         uv
         nodejs
+        yarn
+        ffmpeg
       ];
       shellHook = ''
         export LD_LIBRARY_PATH="${pkgs.stdenv.cc.cc.lib}/lib:${pkgs.libGL}/lib:${pkgs.glib.out}/lib:${pkgs.zlib}/lib:$LD_LIBRARY_PATH"
-        cd server
-        uv sync
-        cd ../
-        npm install
+        uv sync --project server
+        yarn install --ignore-engines
       '';
     };
   };

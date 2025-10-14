@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 import random
 import psutil
+import time
 
 from components.sensor import Sensor, SensorConfig
 
@@ -29,8 +30,15 @@ class SystemInfo(Sensor):
             temperature = round(temp_data['cpu-thermal'][0].current, 1)
         elif 'cpu_thermal' in temp_data:
             temperature = round(temp_data['cpu_thermal'][0].current, 1)
+
+        disk_usage = psutil.disk_usage('/')
+        disk_percent = round((disk_usage.used / disk_usage.total) * 100, 1)
+        uptime_seconds = int(time.time() - psutil.boot_time())
+
         return {
             "cpu_percent": psutil.cpu_percent(),
             "memory": psutil.virtual_memory().percent,
-            "temperature": temperature
+            "temperature": temperature,
+            "disk_usage": disk_percent,
+            "uptime_seconds": uptime_seconds,
         }

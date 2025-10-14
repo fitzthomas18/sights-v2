@@ -1,5 +1,6 @@
 // useApi.js
 import { useEffect, useState } from "react";
+
 import { CancelablePromise } from "./api";
 
 const useApi = <T>(call: CancelablePromise<T>) => {
