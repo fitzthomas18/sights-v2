@@ -1,7 +1,12 @@
 import json
 import logging
 import shutil
+import os
+import glob
 from typing import Optional
+from pathlib import Path
+from time import time
+from datetime import datetime
 
 try:
     import tomllib as toml
@@ -12,6 +17,7 @@ from pydantic import BaseModel
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.exceptions import HTTPException
+from fastapi.responses import PlainTextResponse
 
 from components.camera import CameraComponent, CameraParameters
 from components.drive import DummyConnection, SimpleSerialConnection
@@ -43,8 +49,6 @@ def load_state() -> State:
     new_state: State = State()
     with open("settings.toml", mode="rb") as fp:
         config = toml.load(fp)
-    
-    #print(json.dumps(config, indent=4))
 
     if config["drive"]["enabled"]:
         new_state.drive = SimpleSerialConnection(
@@ -59,9 +63,9 @@ def load_state() -> State:
 
     for label, index in config["camera"]["devices"].items():
         camera_config = CameraParameters(
-            id=label, 
-            width=config["camera"]["width"], 
-            height=config["camera"]["height"], 
+            id=label,
+            width=config["camera"]["width"],
+            height=config["camera"]["height"],
             framerate=config["camera"]["framerate"],
             quality=config["camera"]["quality"],
             source=index)
@@ -74,7 +78,6 @@ def load_state() -> State:
         sensor_class, sensor_config_class = sensorRegister[conf["type"]]
         # Create the SensorConfig object containing the configuration settings for the sensor
         conf_obj: SensorConfig = sensor_config_class(**conf)
-        # Create the Sensor object
         new_state.sensors[label] = sensor_class(conf_obj)
         # Run initial configuration for the sensor
         if conf_obj.enabled:
@@ -96,7 +99,8 @@ app.add_middleware(
 api = FastAPI()
 app.mount("/api/camera/{id:str}", CameraComponent.stream)
 app.mount("/api", api, name="api")
-app.mount("/", SinglePageApplication(directory="../build"), name="frontend")
+app.mount("/docs/", SinglePageApplication(directory="../docs/.vitepress/dist"), name="docs")
+app.mount("/", SinglePageApplication(directory="../client/dist"), name="frontend")
 
 '''
 Quick note re: endpoints using async def or def
@@ -110,14 +114,6 @@ async def list_cameras() -> list[str]:
 @api.get("/camera/all")
 def list_available_cameras() -> list[int]:
     return CameraComponent.list_available()
-
-# class MoveMotorParams(BaseModel):
-#     channel: int
-#     speed: int
-#
-# @api.post("/drive/")
-# async def drive(params: MoveMotorParams):
-#     app.state.drive.move_motor(channel=params.channel, speed=params.speed)
 
 class MoveMotorsParams(BaseModel):
     speed: list[int]
@@ -187,3 +183,17 @@ def set_settings(body: PostSettingsBody):
         fp.write(body.content)
     reload()
 
+@api.get("/logs", response_class=PlainTextResponse)
+async def get_logs():
+    log_file = Path.home() / ".cache" / "sights-log.txt"
+    try:
+        with open(log_file, 'r') as f:
+            return f.read()
+    except FileNotFoundError:
+        return "Log file not found"
+    except Exception as e:
+        return f"Error reading log file: {str(e)}"
+
+@api.get("/ping")
+def ping_endpoint():
+    return {"timestamp": time() * 1000}

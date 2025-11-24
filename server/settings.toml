@@ -71,17 +71,17 @@ quality = 80
 
     [sensors.random]
     type = "random"
-    enabled = true
+    enabled = false
     minimum = 10
     maximum = 20
 
     [sensors.gas]
     type = "sgp30"
-    enabled = true
+    enabled = false
     mock = true
 
     [sensors.thermal_camera]
     type = "mlx90640"
-    enabled = true
+    enabled = false
     interpolate = false
     mock = true

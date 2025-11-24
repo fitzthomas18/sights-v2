@@ -1,22 +1,33 @@
 {
-  "name": "sights-lite",
-  "version": "0.1.0",
+  "name": "sights",
+  "version": "2.0.0-unstable",
+  "description": "A complete teleoperative robot control interface",
   "private": true,
+  "type": "module",
+  "scripts": {
+    "sights:dev": "vite client",
+    "sights:build": "tsc --project client && vite build client",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "generate-client": "openapi --input http://127.0.0.1:8000/api/openapi.json --output ./client/src/api --client axios --name AppClient",
+    "ts:format": "prettier --write '**/*.{tsx,ts,js}'",
+    "ts:check": "tsc --project client --noEmit"
+  },
   "proxy": "http://127.0.0.1:8000",
   "dependencies": {
-    "@headlessui/react": "^1.7.15",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.5.2",
-    "@types/node": "^16.18.36",
+    "@headlessui/react": "^2.2.8",
+    "@tailwindcss/vite": "^4.1.13",
+    "@types/node": "^24.3.1",
+    "@types/prismjs": "^1.26.5",
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.6",
+    "@vitejs/plugin-react-swc": "^4.0.1",
     "axios": "^1.4.0",
-    "chart.js": "^4.3.0",
-    "highlight.js": "^11.8.0",
-    "openapi-fetch": "^0.4.0",
-    "prism-react-renderer": "^2.0.5",
+    "chart.js": "^4.5.0",
+    "form-data": "^4.0.4",
+    "prettier": "^3.6.2",
+    "prism-themes": "^1.9.0",
+    "prismjs": "^1.30.0",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-circular-progressbar": "^2.1.0",
@@ -24,28 +35,28 @@
     "react-hot-toast": "^2.4.1",
     "react-hotkeys-hook": "^4.4.0",
     "react-icons": "^4.10.1",
-    "react-scripts": "5.0.1",
-    "react-simple-code-editor": "^0.13.1",
-    "tailwind-config": "^0.1.2",
+    "react-simple-code-editor": "^0.14.1",
     "ts-key-enum": "^2.0.12",
-    "typescript": "^4.9.5",
-    "use-editable": "^2.3.3",
+    "typescript": "^5.6.0",
     "usehooks-ts": "^2.9.1",
+    "vite": "^7.1.5",
+    "vite-plugin-svgr": "^4.5.0",
+    "vite-tsconfig-paths": "^5.1.4",
     "web-vitals": "^2.1.4"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "test:ts": "tsc --noEmit",
-    "generate-client": "openapi --input http://127.0.0.1:8000/api/openapi.json --output ./src/api --client axios --name AppClient"
+  "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^5.2.2",
+    "openapi-typescript-codegen": "^0.29.0",
+    "react-router-dom": "^6.14.0",
+    "tailwindcss": "^4.1.13",
+    "terser": "^5.44.0",
+    "vitepress": "^2.0.0-alpha.12",
+    "vue": "^3.5.21"
   },
   "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "env": {
+      "vitest/globals": true
+    }
   },
   "browserslist": {
     "production": [
@@ -59,12 +70,7 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "autoprefixer": "^10.4.14",
-    "openapi-typescript-codegen": "^0.24.0",
-    "postcss": "^8.4.24",
-    "react-router-dom": "^6.14.0",
-    "tailwindcss": "^3.3.2"
+  "engines": {
+    "node": ">=20.0.0"
   }
 }
